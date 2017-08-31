@@ -1,0 +1,271 @@
+
+Lesson_15.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000128  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000000c  00800060  00000128  0000019c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000001a8  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001d8  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 000000a0  00000000  00000000  00000214  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000683  00000000  00000000  000002b4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000288  00000000  00000000  00000937  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000041b  00000000  00000000  00000bbf  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000190  00000000  00000000  00000fdc  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    0000023c  00000000  00000000  0000116c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000587  00000000  00000000  000013a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000070  00000000  00000000  0000192f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	2c c0       	rjmp	.+88     	; 0x5c <__bad_interrupt>
+   4:	2b c0       	rjmp	.+86     	; 0x5c <__bad_interrupt>
+   6:	2a c0       	rjmp	.+84     	; 0x5c <__bad_interrupt>
+   8:	29 c0       	rjmp	.+82     	; 0x5c <__bad_interrupt>
+   a:	28 c0       	rjmp	.+80     	; 0x5c <__bad_interrupt>
+   c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
+   e:	26 c0       	rjmp	.+76     	; 0x5c <__bad_interrupt>
+  10:	25 c0       	rjmp	.+74     	; 0x5c <__bad_interrupt>
+  12:	24 c0       	rjmp	.+72     	; 0x5c <__bad_interrupt>
+  14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
+  16:	22 c0       	rjmp	.+68     	; 0x5c <__bad_interrupt>
+  18:	21 c0       	rjmp	.+66     	; 0x5c <__bad_interrupt>
+  1a:	20 c0       	rjmp	.+64     	; 0x5c <__bad_interrupt>
+  1c:	1f c0       	rjmp	.+62     	; 0x5c <__bad_interrupt>
+  1e:	1e c0       	rjmp	.+60     	; 0x5c <__bad_interrupt>
+  20:	1d c0       	rjmp	.+58     	; 0x5c <__bad_interrupt>
+  22:	1c c0       	rjmp	.+56     	; 0x5c <__bad_interrupt>
+  24:	1b c0       	rjmp	.+54     	; 0x5c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	e8 e2       	ldi	r30, 0x28	; 40
+  3a:	f1 e0       	ldi	r31, 0x01	; 1
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	ac 36       	cpi	r26, 0x6C	; 108
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+
+00000048 <__do_clear_bss>:
+  48:	20 e0       	ldi	r18, 0x00	; 0
+  4a:	ac e6       	ldi	r26, 0x6C	; 108
+  4c:	b0 e0       	ldi	r27, 0x00	; 0
+  4e:	01 c0       	rjmp	.+2      	; 0x52 <.do_clear_bss_start>
+
+00000050 <.do_clear_bss_loop>:
+  50:	1d 92       	st	X+, r1
+
+00000052 <.do_clear_bss_start>:
+  52:	ac 36       	cpi	r26, 0x6C	; 108
+  54:	b2 07       	cpc	r27, r18
+  56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
+  58:	43 d0       	rcall	.+134    	; 0xe0 <main>
+  5a:	64 c0       	rjmp	.+200    	; 0x124 <_exit>
+
+0000005c <__bad_interrupt>:
+  5c:	d1 cf       	rjmp	.-94     	; 0x0 <__vectors>
+
+0000005e <EEPROM_write>:
+{
+	uint32_t dt=EEPROM_read_word(uiAdress)*65536;
+	asm("nop");
+	dt+=EEPROM_read_word(uiAdress);
+	return dt;
+}
+  5e:	e1 99       	sbic	0x1c, 1	; 28
+  60:	fe cf       	rjmp	.-4      	; 0x5e <EEPROM_write>
+  62:	9f bb       	out	0x1f, r25	; 31
+  64:	8e bb       	out	0x1e, r24	; 30
+  66:	6d bb       	out	0x1d, r22	; 29
+  68:	e2 9a       	sbi	0x1c, 2	; 28
+  6a:	e1 9a       	sbi	0x1c, 1	; 28
+  6c:	08 95       	ret
+
+0000006e <EEPROM_write_word>:
+  6e:	1f 93       	push	r17
+  70:	cf 93       	push	r28
+  72:	df 93       	push	r29
+  74:	ec 01       	movw	r28, r24
+  76:	17 2f       	mov	r17, r23
+  78:	f2 df       	rcall	.-28     	; 0x5e <EEPROM_write>
+  7a:	61 2f       	mov	r22, r17
+  7c:	ce 01       	movw	r24, r28
+  7e:	01 96       	adiw	r24, 0x01	; 1
+  80:	ee df       	rcall	.-36     	; 0x5e <EEPROM_write>
+  82:	df 91       	pop	r29
+  84:	cf 91       	pop	r28
+  86:	1f 91       	pop	r17
+  88:	08 95       	ret
+
+0000008a <EEPROM_write_dword>:
+  8a:	0f 93       	push	r16
+  8c:	1f 93       	push	r17
+  8e:	cf 93       	push	r28
+  90:	8c 01       	movw	r16, r24
+  92:	c6 2f       	mov	r28, r22
+  94:	64 2f       	mov	r22, r20
+  96:	75 2f       	mov	r23, r21
+  98:	ea df       	rcall	.-44     	; 0x6e <EEPROM_write_word>
+  9a:	6c 2f       	mov	r22, r28
+  9c:	70 e0       	ldi	r23, 0x00	; 0
+  9e:	c8 01       	movw	r24, r16
+  a0:	02 96       	adiw	r24, 0x02	; 2
+  a2:	e5 df       	rcall	.-54     	; 0x6e <EEPROM_write_word>
+  a4:	cf 91       	pop	r28
+  a6:	1f 91       	pop	r17
+  a8:	0f 91       	pop	r16
+  aa:	08 95       	ret
+
+000000ac <EEPROM_write_string>:
+
+
+
+void EEPROM_write_string(unsigned int uiAddress, char str1[])
+
+{
+  ac:	0f 93       	push	r16
+  ae:	1f 93       	push	r17
+  b0:	cf 93       	push	r28
+  b2:	df 93       	push	r29
+  b4:	fb 01       	movw	r30, r22
+	wchar_t n;
+	for (n=0;str1[n]!='\0';n++)
+  b6:	60 81       	ld	r22, Z
+  b8:	66 23       	and	r22, r22
+  ba:	69 f0       	breq	.+26     	; 0xd6 <EEPROM_write_string+0x2a>
+  bc:	8f 01       	movw	r16, r30
+  be:	0f 5f       	subi	r16, 0xFF	; 255
+  c0:	1f 4f       	sbci	r17, 0xFF	; 255
+  c2:	c8 2f       	mov	r28, r24
+  c4:	d9 2f       	mov	r29, r25
+	{
+		EEPROM_write(uiAddress+n,str1[n]);
+  c6:	ce 01       	movw	r24, r28
+  c8:	ca df       	rcall	.-108    	; 0x5e <EEPROM_write>
+
+void EEPROM_write_string(unsigned int uiAddress, char str1[])
+
+{
+	wchar_t n;
+	for (n=0;str1[n]!='\0';n++)
+  ca:	f8 01       	movw	r30, r16
+  cc:	61 91       	ld	r22, Z+
+  ce:	8f 01       	movw	r16, r30
+  d0:	21 96       	adiw	r28, 0x01	; 1
+  d2:	61 11       	cpse	r22, r1
+  d4:	f8 cf       	rjmp	.-16     	; 0xc6 <EEPROM_write_string+0x1a>
+	
+	
+	
+	
+
+}
+  d6:	df 91       	pop	r29
+  d8:	cf 91       	pop	r28
+  da:	1f 91       	pop	r17
+  dc:	0f 91       	pop	r16
+  de:	08 95       	ret
+
+000000e0 <main>:
+
+int main(void)
+{
+	//EEPROM_write(1,120);
+    /* Replace with your application code */
+	EEPROM_write(1,120);
+  e0:	68 e7       	ldi	r22, 0x78	; 120
+  e2:	81 e0       	ldi	r24, 0x01	; 1
+  e4:	90 e0       	ldi	r25, 0x00	; 0
+  e6:	bb df       	rcall	.-138    	; 0x5e <EEPROM_write>
+	
+	EEPROM_write_word(1,3000);
+  e8:	68 eb       	ldi	r22, 0xB8	; 184
+  ea:	7b e0       	ldi	r23, 0x0B	; 11
+  ec:	81 e0       	ldi	r24, 0x01	; 1
+  ee:	90 e0       	ldi	r25, 0x00	; 0
+  f0:	be df       	rcall	.-132    	; 0x6e <EEPROM_write_word>
+	EEPROM_write_dword(3,0xFEDCBA98);
+  f2:	48 e9       	ldi	r20, 0x98	; 152
+  f4:	5a eb       	ldi	r21, 0xBA	; 186
+  f6:	6c ed       	ldi	r22, 0xDC	; 220
+  f8:	7e ef       	ldi	r23, 0xFE	; 254
+  fa:	83 e0       	ldi	r24, 0x03	; 3
+  fc:	90 e0       	ldi	r25, 0x00	; 0
+  fe:	c5 df       	rcall	.-118    	; 0x8a <EEPROM_write_dword>
+	EEPROM_write_string(16,"Hello World");
+ 100:	60 e6       	ldi	r22, 0x60	; 96
+ 102:	70 e0       	ldi	r23, 0x00	; 0
+ 104:	80 e1       	ldi	r24, 0x10	; 16
+ 106:	90 e0       	ldi	r25, 0x00	; 0
+ 108:	d1 df       	rcall	.-94     	; 0xac <EEPROM_write_string>
+	USART_ini(8);
+ 10a:	88 e0       	ldi	r24, 0x08	; 8
+ 10c:	90 e0       	ldi	r25, 0x00	; 0
+ 10e:	01 d0       	rcall	.+2      	; 0x112 <USART_ini>
+	//asm("nop");
+	//dtt=EEPROM_read(1);
+	//USART_Transmit(dtt);
+    while (1) 
+    {
+    }
+ 110:	ff cf       	rjmp	.-2      	; 0x110 <main+0x30>
+
+00000112 <USART_ini>:
+#include "USART.h"
+
+void USART_ini(unsigned int speed)
+{
+	UBRRH=(unsigned char)(speed>>8);
+ 112:	90 bd       	out	0x20, r25	; 32
+	UBRRL=(unsigned char)speed;
+ 114:	89 b9       	out	0x09, r24	; 9
+	//----------------------скорость
+	
+	UCSRB=(1<<RXEN)|(1<<TXEN);
+ 116:	88 e1       	ldi	r24, 0x18	; 24
+ 118:	8a b9       	out	0x0a, r24	; 10
+	//----------------------включаем прием и передачу
+	
+	UCSRB|=(1<<RXCIE);//разрешаем прерывания приемника
+ 11a:	57 9a       	sbi	0x0a, 7	; 10
+	
+	UCSRA|=(1<<U2X);
+ 11c:	59 9a       	sbi	0x0b, 1	; 11
+	// Удвоение частоты
+	
+	UCSRC=(1<<URSEL)|(1<<USBS)|(1<<UCSZ1)|(1<<UCSZ0);
+ 11e:	8e e8       	ldi	r24, 0x8E	; 142
+ 120:	80 bd       	out	0x20, r24	; 32
+ 122:	08 95       	ret
+
+00000124 <_exit>:
+ 124:	f8 94       	cli
+
+00000126 <__stop_program>:
+ 126:	ff cf       	rjmp	.-2      	; 0x126 <__stop_program>

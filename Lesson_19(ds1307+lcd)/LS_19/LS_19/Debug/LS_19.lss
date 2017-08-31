@@ -1,0 +1,807 @@
+
+LS_19.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000003e6  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000000a  00800060  000003e6  0000047a  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000007  0080006a  0080006a  00000484  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  00000484  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000004b4  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 000000f0  00000000  00000000  000004f0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000cc0  00000000  00000000  000005e0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000508  00000000  00000000  000012a0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000007bc  00000000  00000000  000017a8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000190  00000000  00000000  00001f64  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000002bd  00000000  00000000  000020f4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000003a0  00000000  00000000  000023b1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 000000b0  00000000  00000000  00002751  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	2c c0       	rjmp	.+88     	; 0x5c <__bad_interrupt>
+   4:	2b c0       	rjmp	.+86     	; 0x5c <__bad_interrupt>
+   6:	2a c0       	rjmp	.+84     	; 0x5c <__bad_interrupt>
+   8:	29 c0       	rjmp	.+82     	; 0x5c <__bad_interrupt>
+   a:	28 c0       	rjmp	.+80     	; 0x5c <__bad_interrupt>
+   c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
+   e:	26 c0       	rjmp	.+76     	; 0x5c <__bad_interrupt>
+  10:	25 c0       	rjmp	.+74     	; 0x5c <__bad_interrupt>
+  12:	24 c0       	rjmp	.+72     	; 0x5c <__bad_interrupt>
+  14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
+  16:	22 c0       	rjmp	.+68     	; 0x5c <__bad_interrupt>
+  18:	21 c0       	rjmp	.+66     	; 0x5c <__bad_interrupt>
+  1a:	20 c0       	rjmp	.+64     	; 0x5c <__bad_interrupt>
+  1c:	1f c0       	rjmp	.+62     	; 0x5c <__bad_interrupt>
+  1e:	1e c0       	rjmp	.+60     	; 0x5c <__bad_interrupt>
+  20:	1d c0       	rjmp	.+58     	; 0x5c <__bad_interrupt>
+  22:	1c c0       	rjmp	.+56     	; 0x5c <__bad_interrupt>
+  24:	1b c0       	rjmp	.+54     	; 0x5c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	e6 ee       	ldi	r30, 0xE6	; 230
+  3a:	f3 e0       	ldi	r31, 0x03	; 3
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	aa 36       	cpi	r26, 0x6A	; 106
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+
+00000048 <__do_clear_bss>:
+  48:	20 e0       	ldi	r18, 0x00	; 0
+  4a:	aa e6       	ldi	r26, 0x6A	; 106
+  4c:	b0 e0       	ldi	r27, 0x00	; 0
+  4e:	01 c0       	rjmp	.+2      	; 0x52 <.do_clear_bss_start>
+
+00000050 <.do_clear_bss_loop>:
+  50:	1d 92       	st	X+, r1
+
+00000052 <.do_clear_bss_start>:
+  52:	a1 37       	cpi	r26, 0x71	; 113
+  54:	b2 07       	cpc	r27, r18
+  56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
+  58:	af d0       	rcall	.+350    	; 0x1b8 <main>
+  5a:	c3 c1       	rjmp	.+902    	; 0x3e2 <_exit>
+
+0000005c <__bad_interrupt>:
+  5c:	d1 cf       	rjmp	.-94     	; 0x0 <__vectors>
+
+0000005e <I2C_Init>:
+
+#include "I2C.h"
+
+void I2C_Init (void)
+{
+	TWBR=0x20;//скорость передачи (при 8 мгц получается 100 кгц, что и необходимо для общения с ds1307)
+  5e:	80 e2       	ldi	r24, 0x20	; 32
+  60:	80 b9       	out	0x00, r24	; 0
+  62:	08 95       	ret
+
+00000064 <I2C_StartCondition>:
+}
+
+
+void I2C_StartCondition(void)
+{
+	TWCR = (1<<TWINT)|(1<<TWSTA)|(1<<TWEN);
+  64:	84 ea       	ldi	r24, 0xA4	; 164
+  66:	86 bf       	out	0x36, r24	; 54
+	while (!(TWCR & (1<<TWINT)));//подождем пока установится TWIN
+  68:	06 b6       	in	r0, 0x36	; 54
+  6a:	07 fe       	sbrs	r0, 7
+  6c:	fd cf       	rjmp	.-6      	; 0x68 <I2C_StartCondition+0x4>
+}
+  6e:	08 95       	ret
+
+00000070 <I2C_StopCondition>:
+
+void I2C_StopCondition(void)
+{
+	TWCR = (1<<TWINT)|(1<<TWSTO)|(1<<TWEN);
+  70:	84 e9       	ldi	r24, 0x94	; 148
+  72:	86 bf       	out	0x36, r24	; 54
+  74:	08 95       	ret
+
+00000076 <I2C_SendByte>:
+}
+
+void I2C_SendByte(unsigned char c)
+{
+	TWDR = c;//запишем байт в регистр данных
+  76:	83 b9       	out	0x03, r24	; 3
+	TWCR = (1<<TWINT)|(1<<TWEN);//включим передачу байта
+  78:	84 e8       	ldi	r24, 0x84	; 132
+  7a:	86 bf       	out	0x36, r24	; 54
+	while (!(TWCR & (1<<TWINT)));//подождем пока установится TWIN
+  7c:	06 b6       	in	r0, 0x36	; 54
+  7e:	07 fe       	sbrs	r0, 7
+  80:	fd cf       	rjmp	.-6      	; 0x7c <I2C_SendByte+0x6>
+}
+  82:	08 95       	ret
+
+00000084 <I2C_SendByteByADDR>:
+
+void I2C_SendByteByADDR(unsigned char c,unsigned char addr)
+{
+  84:	cf 93       	push	r28
+  86:	df 93       	push	r29
+  88:	c8 2f       	mov	r28, r24
+  8a:	d6 2f       	mov	r29, r22
+	I2C_StartCondition(); // Отправим условие START
+  8c:	eb df       	rcall	.-42     	; 0x64 <I2C_StartCondition>
+	I2C_SendByte(addr); // Отправим в шину адрес устройства + бит чтения-записи
+  8e:	8d 2f       	mov	r24, r29
+  90:	f2 df       	rcall	.-28     	; 0x76 <I2C_SendByte>
+	I2C_SendByte(c);// Отправим байт данных
+  92:	8c 2f       	mov	r24, r28
+  94:	f0 df       	rcall	.-32     	; 0x76 <I2C_SendByte>
+	while (!(TWCR & (1<<TWINT)));//подождем пока установится TWIN
+}
+
+void I2C_StopCondition(void)
+{
+	TWCR = (1<<TWINT)|(1<<TWSTO)|(1<<TWEN);
+  96:	84 e9       	ldi	r24, 0x94	; 148
+  98:	86 bf       	out	0x36, r24	; 54
+{
+	I2C_StartCondition(); // Отправим условие START
+	I2C_SendByte(addr); // Отправим в шину адрес устройства + бит чтения-записи
+	I2C_SendByte(c);// Отправим байт данных
+	I2C_StopCondition();// Отправим условие START
+}
+  9a:	df 91       	pop	r29
+  9c:	cf 91       	pop	r28
+  9e:	08 95       	ret
+
+000000a0 <I2C_ReadByte>:
+
+unsigned char I2C_ReadByte(void)
+{
+	TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWEA);//при моделировании в протеусе возникает проблема
+  a0:	84 ec       	ldi	r24, 0xC4	; 196
+  a2:	86 bf       	out	0x36, r24	; 54
+	//что бит TWEA нужно ставить ноль(0<<TWEA) тогда время начнет идти в протеусе 
+	//в реале все нормально работает.....без нулей всяких
+	while (!(TWCR & (1<<TWINT)));//ожидание установки бита TWIN
+  a4:	06 b6       	in	r0, 0x36	; 54
+  a6:	07 fe       	sbrs	r0, 7
+  a8:	fd cf       	rjmp	.-6      	; 0xa4 <I2C_ReadByte+0x4>
+	return TWDR;//читаем регистр данных
+  aa:	83 b1       	in	r24, 0x03	; 3
+}
+  ac:	08 95       	ret
+
+000000ae <sendhalfbyte>:
+void sendhalfbyte(unsigned char c)
+
+{
+	
+	c<<=4;
+	e1;
+  ae:	93 9a       	sbi	0x12, 3	; 18
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  b0:	95 e8       	ldi	r25, 0x85	; 133
+  b2:	9a 95       	dec	r25
+  b4:	f1 f7       	brne	.-4      	; 0xb2 <sendhalfbyte+0x4>
+  b6:	00 00       	nop
+	_delay_us(50);
+	PORTD&=0b00001111;//стирание информации на входах
+  b8:	92 b3       	in	r25, 0x12	; 18
+  ba:	9f 70       	andi	r25, 0x0F	; 15
+  bc:	92 bb       	out	0x12, r25	; 18
+	PORTD|=c;
+  be:	92 b3       	in	r25, 0x12	; 18
+//--------------------------------------------
+void sendhalfbyte(unsigned char c)
+
+{
+	
+	c<<=4;
+  c0:	82 95       	swap	r24
+  c2:	80 7f       	andi	r24, 0xF0	; 240
+	e1;
+	_delay_us(50);
+	PORTD&=0b00001111;//стирание информации на входах
+	PORTD|=c;
+  c4:	89 2b       	or	r24, r25
+  c6:	82 bb       	out	0x12, r24	; 18
+	e0;
+  c8:	93 98       	cbi	0x12, 3	; 18
+  ca:	85 e8       	ldi	r24, 0x85	; 133
+  cc:	8a 95       	dec	r24
+  ce:	f1 f7       	brne	.-4      	; 0xcc <sendhalfbyte+0x1e>
+  d0:	00 00       	nop
+  d2:	08 95       	ret
+
+000000d4 <sendbyte>:
+	
+}
+//---------------------------------------------
+void sendbyte(unsigned char c,unsigned char mode)
+
+{
+  d4:	cf 93       	push	r28
+  d6:	c8 2f       	mov	r28, r24
+	if (mode==0)
+  d8:	61 11       	cpse	r22, r1
+  da:	02 c0       	rjmp	.+4      	; 0xe0 <sendbyte+0xc>
+	{
+		rs0;
+  dc:	92 98       	cbi	0x12, 2	; 18
+  de:	01 c0       	rjmp	.+2      	; 0xe2 <sendbyte+0xe>
+	}else
+
+	{
+		rs1;
+  e0:	92 9a       	sbi	0x12, 2	; 18
+	}
+	unsigned char hc=0;
+	
+	hc=c>>4;
+	sendhalfbyte(hc);
+  e2:	8c 2f       	mov	r24, r28
+  e4:	82 95       	swap	r24
+  e6:	8f 70       	andi	r24, 0x0F	; 15
+  e8:	e2 df       	rcall	.-60     	; 0xae <sendhalfbyte>
+	sendhalfbyte(c);
+  ea:	8c 2f       	mov	r24, r28
+  ec:	e0 df       	rcall	.-64     	; 0xae <sendhalfbyte>
+	
+	
+}
+  ee:	cf 91       	pop	r28
+  f0:	08 95       	ret
+
+000000f2 <sendchar>:
+//----------------------------------------------
+
+void sendchar(unsigned char c)
+
+{
+	sendbyte(c,1);
+  f2:	61 e0       	ldi	r22, 0x01	; 1
+  f4:	ef df       	rcall	.-34     	; 0xd4 <sendbyte>
+  f6:	08 95       	ret
+
+000000f8 <lcd_gotoxy>:
+//-------------------------------------------
+
+void lcd_gotoxy(unsigned char x, unsigned char y)
+{
+	char adress;
+	adress=(0x40*y+x)|0b10000000;
+  f8:	90 e4       	ldi	r25, 0x40	; 64
+  fa:	69 9f       	mul	r22, r25
+  fc:	80 0d       	add	r24, r0
+  fe:	11 24       	eor	r1, r1
+	sendbyte(adress,0);
+ 100:	60 e0       	ldi	r22, 0x00	; 0
+ 102:	80 68       	ori	r24, 0x80	; 128
+ 104:	e7 df       	rcall	.-50     	; 0xd4 <sendbyte>
+ 106:	08 95       	ret
+
+00000108 <lcd_clear>:
+}
+//---------------------------------------
+void lcd_clear()
+{
+	sendbyte(0b00000001,0);
+ 108:	60 e0       	ldi	r22, 0x00	; 0
+ 10a:	81 e0       	ldi	r24, 0x01	; 1
+ 10c:	e3 df       	rcall	.-58     	; 0xd4 <sendbyte>
+ 10e:	87 eb       	ldi	r24, 0xB7	; 183
+ 110:	9b e0       	ldi	r25, 0x0B	; 11
+ 112:	01 97       	sbiw	r24, 0x01	; 1
+ 114:	f1 f7       	brne	.-4      	; 0x112 <lcd_clear+0xa>
+ 116:	00 c0       	rjmp	.+0      	; 0x118 <lcd_clear+0x10>
+ 118:	00 00       	nop
+ 11a:	08 95       	ret
+
+0000011c <lcd_print>:
+}
+
+
+//--------------------------------------
+void lcd_print(char str1[])
+{
+ 11c:	cf 93       	push	r28
+ 11e:	df 93       	push	r29
+ 120:	ec 01       	movw	r28, r24
+	wchar_t n;
+	for (n=0;str1[n]!='\0';n++)
+ 122:	88 81       	ld	r24, Y
+ 124:	88 23       	and	r24, r24
+ 126:	29 f0       	breq	.+10     	; 0x132 <lcd_print+0x16>
+ 128:	21 96       	adiw	r28, 0x01	; 1
+	{
+		sendchar(str1[n]);
+ 12a:	e3 df       	rcall	.-58     	; 0xf2 <sendchar>
+
+//--------------------------------------
+void lcd_print(char str1[])
+{
+	wchar_t n;
+	for (n=0;str1[n]!='\0';n++)
+ 12c:	89 91       	ld	r24, Y+
+ 12e:	81 11       	cpse	r24, r1
+ 130:	fc cf       	rjmp	.-8      	; 0x12a <lcd_print+0xe>
+	{
+		sendchar(str1[n]);
+	}
+}
+ 132:	df 91       	pop	r29
+ 134:	cf 91       	pop	r28
+ 136:	08 95       	ret
+
+00000138 <LCD_ini>:
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 138:	8f e2       	ldi	r24, 0x2F	; 47
+ 13a:	95 e7       	ldi	r25, 0x75	; 117
+ 13c:	01 97       	sbiw	r24, 0x01	; 1
+ 13e:	f1 f7       	brne	.-4      	; 0x13c <LCD_ini+0x4>
+ 140:	00 c0       	rjmp	.+0      	; 0x142 <LCD_ini+0xa>
+ 142:	00 00       	nop
+
+void LCD_ini(void)
+{
+	
+	_delay_ms(15);//ждем 15 милисекунд
+	sendhalfbyte(0b00000011);
+ 144:	83 e0       	ldi	r24, 0x03	; 3
+ 146:	b3 df       	rcall	.-154    	; 0xae <sendhalfbyte>
+ 148:	8f e3       	ldi	r24, 0x3F	; 63
+ 14a:	9f e1       	ldi	r25, 0x1F	; 31
+ 14c:	01 97       	sbiw	r24, 0x01	; 1
+ 14e:	f1 f7       	brne	.-4      	; 0x14c <LCD_ini+0x14>
+ 150:	00 c0       	rjmp	.+0      	; 0x152 <LCD_ini+0x1a>
+ 152:	00 00       	nop
+	_delay_ms(4);
+	sendhalfbyte(0b00000011);
+ 154:	83 e0       	ldi	r24, 0x03	; 3
+ 156:	ab df       	rcall	.-170    	; 0xae <sendhalfbyte>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 158:	87 ec       	ldi	r24, 0xC7	; 199
+ 15a:	90 e0       	ldi	r25, 0x00	; 0
+ 15c:	01 97       	sbiw	r24, 0x01	; 1
+ 15e:	f1 f7       	brne	.-4      	; 0x15c <LCD_ini+0x24>
+ 160:	00 c0       	rjmp	.+0      	; 0x162 <LCD_ini+0x2a>
+ 162:	00 00       	nop
+	_delay_us(100);
+	sendhalfbyte(0b00000011);
+ 164:	83 e0       	ldi	r24, 0x03	; 3
+ 166:	a3 df       	rcall	.-186    	; 0xae <sendhalfbyte>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 168:	8f ec       	ldi	r24, 0xCF	; 207
+ 16a:	97 e0       	ldi	r25, 0x07	; 7
+ 16c:	01 97       	sbiw	r24, 0x01	; 1
+ 16e:	f1 f7       	brne	.-4      	; 0x16c <LCD_ini+0x34>
+ 170:	00 c0       	rjmp	.+0      	; 0x172 <LCD_ini+0x3a>
+ 172:	00 00       	nop
+	_delay_ms(1);
+	sendhalfbyte(0b00000010);
+ 174:	82 e0       	ldi	r24, 0x02	; 2
+ 176:	9b df       	rcall	.-202    	; 0xae <sendhalfbyte>
+ 178:	8f ec       	ldi	r24, 0xCF	; 207
+ 17a:	97 e0       	ldi	r25, 0x07	; 7
+ 17c:	01 97       	sbiw	r24, 0x01	; 1
+ 17e:	f1 f7       	brne	.-4      	; 0x17c <LCD_ini+0x44>
+ 180:	00 c0       	rjmp	.+0      	; 0x182 <LCD_ini+0x4a>
+ 182:	00 00       	nop
+	_delay_ms(1);
+	sendbyte(0b00101000,0);//включаем 4-бытный режим,используем две линии
+ 184:	60 e0       	ldi	r22, 0x00	; 0
+ 186:	88 e2       	ldi	r24, 0x28	; 40
+ 188:	a5 df       	rcall	.-182    	; 0xd4 <sendbyte>
+ 18a:	8f ec       	ldi	r24, 0xCF	; 207
+ 18c:	97 e0       	ldi	r25, 0x07	; 7
+ 18e:	01 97       	sbiw	r24, 0x01	; 1
+ 190:	f1 f7       	brne	.-4      	; 0x18e <LCD_ini+0x56>
+ 192:	00 c0       	rjmp	.+0      	; 0x194 <LCD_ini+0x5c>
+ 194:	00 00       	nop
+	_delay_ms(1);
+	sendbyte(0b00001100,0);//включаем отображение на дисплее(D=1)курсоры не включены
+ 196:	60 e0       	ldi	r22, 0x00	; 0
+ 198:	8c e0       	ldi	r24, 0x0C	; 12
+ 19a:	9c df       	rcall	.-200    	; 0xd4 <sendbyte>
+ 19c:	8f ec       	ldi	r24, 0xCF	; 207
+ 19e:	97 e0       	ldi	r25, 0x07	; 7
+ 1a0:	01 97       	sbiw	r24, 0x01	; 1
+ 1a2:	f1 f7       	brne	.-4      	; 0x1a0 <LCD_ini+0x68>
+ 1a4:	00 c0       	rjmp	.+0      	; 0x1a6 <LCD_ini+0x6e>
+ 1a6:	00 00       	nop
+	_delay_ms(1);
+	sendbyte(0b00000110,0);//выставляем курсор двигаться слева на право
+ 1a8:	60 e0       	ldi	r22, 0x00	; 0
+ 1aa:	86 e0       	ldi	r24, 0x06	; 6
+ 1ac:	93 df       	rcall	.-218    	; 0xd4 <sendbyte>
+ 1ae:	08 95       	ret
+
+000001b0 <PoRT_ini>:
+unsigned char god=0;
+
+
+void PoRT_ini(void)
+{
+	PORTD=0x00;
+ 1b0:	12 ba       	out	0x12, r1	; 18
+	DDRD=0xFF;
+ 1b2:	8f ef       	ldi	r24, 0xFF	; 255
+ 1b4:	81 bb       	out	0x11, r24	; 17
+ 1b6:	08 95       	ret
+
+000001b8 <main>:
+	
+}
+
+int main(void)
+{
+	PoRT_ini();
+ 1b8:	fb df       	rcall	.-10     	; 0x1b0 <PoRT_ini>
+	I2C_Init();
+ 1ba:	51 df       	rcall	.-350    	; 0x5e <I2C_Init>
+	LCD_ini();
+ 1bc:	bd df       	rcall	.-134    	; 0x138 <LCD_ini>
+	lcd_print("Hello!!!");
+ 1be:	80 e6       	ldi	r24, 0x60	; 96
+ 1c0:	90 e0       	ldi	r25, 0x00	; 0
+ 1c2:	ac df       	rcall	.-168    	; 0x11c <lcd_print>
+ 1c4:	2f e7       	ldi	r18, 0x7F	; 127
+ 1c6:	8a e1       	ldi	r24, 0x1A	; 26
+ 1c8:	96 e0       	ldi	r25, 0x06	; 6
+ 1ca:	21 50       	subi	r18, 0x01	; 1
+ 1cc:	80 40       	sbci	r24, 0x00	; 0
+ 1ce:	90 40       	sbci	r25, 0x00	; 0
+ 1d0:	e1 f7       	brne	.-8      	; 0x1ca <main+0x12>
+ 1d2:	00 c0       	rjmp	.+0      	; 0x1d4 <main+0x1c>
+ 1d4:	00 00       	nop
+	_delay_ms(250);
+	lcd_clear();
+ 1d6:	98 df       	rcall	.-208    	; 0x108 <lcd_clear>
+		day=RTC_ConvertFromDec(day);
+		data=RTC_ConvertFromDec(data);
+		mesiac=RTC_ConvertFromDec(mesiac);
+		god=RTC_ConvertFromDec(god);
+		lcd_gotoxy(0,0);
+		sendchar(data/10+0x30);//преобразуем число в код числа
+ 1d8:	cd ec       	ldi	r28, 0xCD	; 205
+    /* Replace with your application code */
+    while (1) 
+    {
+		//lcd_clear();
+		
+		I2C_SendByteByADDR(0,0b11010000);//переходим на адрес 0
+ 1da:	60 ed       	ldi	r22, 0xD0	; 208
+ 1dc:	80 e0       	ldi	r24, 0x00	; 0
+ 1de:	52 df       	rcall	.-348    	; 0x84 <I2C_SendByteByADDR>
+ 1e0:	2f ef       	ldi	r18, 0xFF	; 255
+ 1e2:	82 e5       	ldi	r24, 0x52	; 82
+ 1e4:	97 e0       	ldi	r25, 0x07	; 7
+ 1e6:	21 50       	subi	r18, 0x01	; 1
+ 1e8:	80 40       	sbci	r24, 0x00	; 0
+ 1ea:	90 40       	sbci	r25, 0x00	; 0
+ 1ec:	e1 f7       	brne	.-8      	; 0x1e6 <main+0x2e>
+ 1ee:	00 c0       	rjmp	.+0      	; 0x1f0 <main+0x38>
+ 1f0:	00 00       	nop
+		_delay_ms(300);
+		I2C_StartCondition();//отправляем условие старта
+ 1f2:	38 df       	rcall	.-400    	; 0x64 <I2C_StartCondition>
+		I2C_SendByte(0b11010001);//отправляем в устройство бит чтения
+ 1f4:	81 ed       	ldi	r24, 0xD1	; 209
+ 1f6:	3f df       	rcall	.-386    	; 0x76 <I2C_SendByte>
+		sec=I2C_ReadByte();
+ 1f8:	53 df       	rcall	.-346    	; 0xa0 <I2C_ReadByte>
+ 1fa:	80 93 70 00 	sts	0x0070, r24	; 0x800070 <sec>
+		min=I2C_ReadByte();
+ 1fe:	50 df       	rcall	.-352    	; 0xa0 <I2C_ReadByte>
+ 200:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <min>
+		hose=I2C_ReadByte();
+ 204:	4d df       	rcall	.-358    	; 0xa0 <I2C_ReadByte>
+ 206:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <hose>
+		day=I2C_ReadByte();
+ 20a:	4a df       	rcall	.-364    	; 0xa0 <I2C_ReadByte>
+ 20c:	80 93 6d 00 	sts	0x006D, r24	; 0x80006d <day>
+		data=I2C_ReadByte();
+ 210:	47 df       	rcall	.-370    	; 0xa0 <I2C_ReadByte>
+ 212:	80 93 6c 00 	sts	0x006C, r24	; 0x80006c <data>
+		mesiac=I2C_ReadByte();
+ 216:	44 df       	rcall	.-376    	; 0xa0 <I2C_ReadByte>
+ 218:	80 93 6b 00 	sts	0x006B, r24	; 0x80006b <mesiac>
+		god=I2C_ReadByte();
+ 21c:	41 df       	rcall	.-382    	; 0xa0 <I2C_ReadByte>
+ 21e:	80 93 6a 00 	sts	0x006A, r24	; 0x80006a <__data_end>
+		I2C_StopCondition();
+ 222:	26 df       	rcall	.-436    	; 0x70 <I2C_StopCondition>
+		sec=RTC_ConvertFromDec(sec);
+ 224:	80 91 70 00 	lds	r24, 0x0070	; 0x800070 <sec>
+ 228:	d1 d0       	rcall	.+418    	; 0x3cc <RTC_ConvertFromDec>
+ 22a:	80 93 70 00 	sts	0x0070, r24	; 0x800070 <sec>
+		min=RTC_ConvertFromDec(min);
+ 22e:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <min>
+ 232:	cc d0       	rcall	.+408    	; 0x3cc <RTC_ConvertFromDec>
+ 234:	80 93 6f 00 	sts	0x006F, r24	; 0x80006f <min>
+		hose=RTC_ConvertFromDec(hose);
+ 238:	80 91 6e 00 	lds	r24, 0x006E	; 0x80006e <hose>
+ 23c:	c7 d0       	rcall	.+398    	; 0x3cc <RTC_ConvertFromDec>
+ 23e:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <hose>
+		day=RTC_ConvertFromDec(day);
+ 242:	80 91 6d 00 	lds	r24, 0x006D	; 0x80006d <day>
+ 246:	c2 d0       	rcall	.+388    	; 0x3cc <RTC_ConvertFromDec>
+ 248:	80 93 6d 00 	sts	0x006D, r24	; 0x80006d <day>
+		data=RTC_ConvertFromDec(data);
+ 24c:	80 91 6c 00 	lds	r24, 0x006C	; 0x80006c <data>
+ 250:	bd d0       	rcall	.+378    	; 0x3cc <RTC_ConvertFromDec>
+ 252:	80 93 6c 00 	sts	0x006C, r24	; 0x80006c <data>
+		mesiac=RTC_ConvertFromDec(mesiac);
+ 256:	80 91 6b 00 	lds	r24, 0x006B	; 0x80006b <mesiac>
+ 25a:	b8 d0       	rcall	.+368    	; 0x3cc <RTC_ConvertFromDec>
+ 25c:	80 93 6b 00 	sts	0x006B, r24	; 0x80006b <mesiac>
+		god=RTC_ConvertFromDec(god);
+ 260:	80 91 6a 00 	lds	r24, 0x006A	; 0x80006a <__data_end>
+ 264:	b3 d0       	rcall	.+358    	; 0x3cc <RTC_ConvertFromDec>
+ 266:	80 93 6a 00 	sts	0x006A, r24	; 0x80006a <__data_end>
+		lcd_gotoxy(0,0);
+ 26a:	60 e0       	ldi	r22, 0x00	; 0
+ 26c:	80 e0       	ldi	r24, 0x00	; 0
+ 26e:	44 df       	rcall	.-376    	; 0xf8 <lcd_gotoxy>
+		sendchar(data/10+0x30);//преобразуем число в код числа
+ 270:	80 91 6c 00 	lds	r24, 0x006C	; 0x80006c <data>
+ 274:	8c 9f       	mul	r24, r28
+ 276:	81 2d       	mov	r24, r1
+ 278:	11 24       	eor	r1, r1
+ 27a:	86 95       	lsr	r24
+ 27c:	86 95       	lsr	r24
+ 27e:	86 95       	lsr	r24
+ 280:	80 5d       	subi	r24, 0xD0	; 208
+ 282:	37 df       	rcall	.-402    	; 0xf2 <sendchar>
+		sendchar(data%10+0x30);//преобразуем число в код числа
+ 284:	80 91 6c 00 	lds	r24, 0x006C	; 0x80006c <data>
+ 288:	8c 9f       	mul	r24, r28
+ 28a:	91 2d       	mov	r25, r1
+ 28c:	11 24       	eor	r1, r1
+ 28e:	96 95       	lsr	r25
+ 290:	96 95       	lsr	r25
+ 292:	96 95       	lsr	r25
+ 294:	99 0f       	add	r25, r25
+ 296:	29 2f       	mov	r18, r25
+ 298:	22 0f       	add	r18, r18
+ 29a:	22 0f       	add	r18, r18
+ 29c:	92 0f       	add	r25, r18
+ 29e:	89 1b       	sub	r24, r25
+ 2a0:	80 5d       	subi	r24, 0xD0	; 208
+ 2a2:	27 df       	rcall	.-434    	; 0xf2 <sendchar>
+		sendchar('.');
+ 2a4:	8e e2       	ldi	r24, 0x2E	; 46
+ 2a6:	25 df       	rcall	.-438    	; 0xf2 <sendchar>
+		sendchar(mesiac/10+0x30);//преобразуем число в код числа
+ 2a8:	80 91 6b 00 	lds	r24, 0x006B	; 0x80006b <mesiac>
+ 2ac:	8c 9f       	mul	r24, r28
+ 2ae:	81 2d       	mov	r24, r1
+ 2b0:	11 24       	eor	r1, r1
+ 2b2:	86 95       	lsr	r24
+ 2b4:	86 95       	lsr	r24
+ 2b6:	86 95       	lsr	r24
+ 2b8:	80 5d       	subi	r24, 0xD0	; 208
+ 2ba:	1b df       	rcall	.-458    	; 0xf2 <sendchar>
+		sendchar(mesiac%10+0x30);//преобразуем число в код числа
+ 2bc:	80 91 6b 00 	lds	r24, 0x006B	; 0x80006b <mesiac>
+ 2c0:	8c 9f       	mul	r24, r28
+ 2c2:	91 2d       	mov	r25, r1
+ 2c4:	11 24       	eor	r1, r1
+ 2c6:	96 95       	lsr	r25
+ 2c8:	96 95       	lsr	r25
+ 2ca:	96 95       	lsr	r25
+ 2cc:	99 0f       	add	r25, r25
+ 2ce:	29 2f       	mov	r18, r25
+ 2d0:	22 0f       	add	r18, r18
+ 2d2:	22 0f       	add	r18, r18
+ 2d4:	92 0f       	add	r25, r18
+ 2d6:	89 1b       	sub	r24, r25
+ 2d8:	80 5d       	subi	r24, 0xD0	; 208
+ 2da:	0b df       	rcall	.-490    	; 0xf2 <sendchar>
+		sendchar('.');
+ 2dc:	8e e2       	ldi	r24, 0x2E	; 46
+ 2de:	09 df       	rcall	.-494    	; 0xf2 <sendchar>
+		sendchar(god/10+0x30);//преобразуем число в код числа
+ 2e0:	80 91 6a 00 	lds	r24, 0x006A	; 0x80006a <__data_end>
+ 2e4:	8c 9f       	mul	r24, r28
+ 2e6:	81 2d       	mov	r24, r1
+ 2e8:	11 24       	eor	r1, r1
+ 2ea:	86 95       	lsr	r24
+ 2ec:	86 95       	lsr	r24
+ 2ee:	86 95       	lsr	r24
+ 2f0:	80 5d       	subi	r24, 0xD0	; 208
+ 2f2:	ff de       	rcall	.-514    	; 0xf2 <sendchar>
+		sendchar(god%10+0x30);//преобразуем число в код числа
+ 2f4:	80 91 6a 00 	lds	r24, 0x006A	; 0x80006a <__data_end>
+ 2f8:	8c 9f       	mul	r24, r28
+ 2fa:	91 2d       	mov	r25, r1
+ 2fc:	11 24       	eor	r1, r1
+ 2fe:	96 95       	lsr	r25
+ 300:	96 95       	lsr	r25
+ 302:	96 95       	lsr	r25
+ 304:	99 0f       	add	r25, r25
+ 306:	29 2f       	mov	r18, r25
+ 308:	22 0f       	add	r18, r18
+ 30a:	22 0f       	add	r18, r18
+ 30c:	92 0f       	add	r25, r18
+ 30e:	89 1b       	sub	r24, r25
+ 310:	80 5d       	subi	r24, 0xD0	; 208
+ 312:	ef de       	rcall	.-546    	; 0xf2 <sendchar>
+		sendchar('.');
+ 314:	8e e2       	ldi	r24, 0x2E	; 46
+ 316:	ed de       	rcall	.-550    	; 0xf2 <sendchar>
+		sendchar(day+0x30);
+ 318:	80 91 6d 00 	lds	r24, 0x006D	; 0x80006d <day>
+ 31c:	80 5d       	subi	r24, 0xD0	; 208
+ 31e:	e9 de       	rcall	.-558    	; 0xf2 <sendchar>
+		
+		
+		lcd_gotoxy(0,1);
+ 320:	61 e0       	ldi	r22, 0x01	; 1
+ 322:	80 e0       	ldi	r24, 0x00	; 0
+ 324:	e9 de       	rcall	.-558    	; 0xf8 <lcd_gotoxy>
+		sendchar(hose/10+0x30);//преобразуем число в код числа
+ 326:	80 91 6e 00 	lds	r24, 0x006E	; 0x80006e <hose>
+ 32a:	8c 9f       	mul	r24, r28
+ 32c:	81 2d       	mov	r24, r1
+ 32e:	11 24       	eor	r1, r1
+ 330:	86 95       	lsr	r24
+ 332:	86 95       	lsr	r24
+ 334:	86 95       	lsr	r24
+ 336:	80 5d       	subi	r24, 0xD0	; 208
+ 338:	dc de       	rcall	.-584    	; 0xf2 <sendchar>
+		sendchar(hose%10+0x30);
+ 33a:	80 91 6e 00 	lds	r24, 0x006E	; 0x80006e <hose>
+ 33e:	8c 9f       	mul	r24, r28
+ 340:	91 2d       	mov	r25, r1
+ 342:	11 24       	eor	r1, r1
+ 344:	96 95       	lsr	r25
+ 346:	96 95       	lsr	r25
+ 348:	96 95       	lsr	r25
+ 34a:	99 0f       	add	r25, r25
+ 34c:	29 2f       	mov	r18, r25
+ 34e:	22 0f       	add	r18, r18
+ 350:	22 0f       	add	r18, r18
+ 352:	92 0f       	add	r25, r18
+ 354:	89 1b       	sub	r24, r25
+ 356:	80 5d       	subi	r24, 0xD0	; 208
+ 358:	cc de       	rcall	.-616    	; 0xf2 <sendchar>
+		sendchar(':');
+ 35a:	8a e3       	ldi	r24, 0x3A	; 58
+ 35c:	ca de       	rcall	.-620    	; 0xf2 <sendchar>
+		sendchar(min/10+0x30);//преобразуем число в код числа
+ 35e:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <min>
+ 362:	8c 9f       	mul	r24, r28
+ 364:	81 2d       	mov	r24, r1
+ 366:	11 24       	eor	r1, r1
+ 368:	86 95       	lsr	r24
+ 36a:	86 95       	lsr	r24
+ 36c:	86 95       	lsr	r24
+ 36e:	80 5d       	subi	r24, 0xD0	; 208
+ 370:	c0 de       	rcall	.-640    	; 0xf2 <sendchar>
+		sendchar(min%10+0x30);
+ 372:	80 91 6f 00 	lds	r24, 0x006F	; 0x80006f <min>
+ 376:	8c 9f       	mul	r24, r28
+ 378:	91 2d       	mov	r25, r1
+ 37a:	11 24       	eor	r1, r1
+ 37c:	96 95       	lsr	r25
+ 37e:	96 95       	lsr	r25
+ 380:	96 95       	lsr	r25
+ 382:	99 0f       	add	r25, r25
+ 384:	29 2f       	mov	r18, r25
+ 386:	22 0f       	add	r18, r18
+ 388:	22 0f       	add	r18, r18
+ 38a:	92 0f       	add	r25, r18
+ 38c:	89 1b       	sub	r24, r25
+ 38e:	80 5d       	subi	r24, 0xD0	; 208
+ 390:	b0 de       	rcall	.-672    	; 0xf2 <sendchar>
+		sendchar(':');
+ 392:	8a e3       	ldi	r24, 0x3A	; 58
+ 394:	ae de       	rcall	.-676    	; 0xf2 <sendchar>
+		sendchar(sec/10+0x30);//преобразуем число в код числа
+ 396:	80 91 70 00 	lds	r24, 0x0070	; 0x800070 <sec>
+ 39a:	8c 9f       	mul	r24, r28
+ 39c:	81 2d       	mov	r24, r1
+ 39e:	11 24       	eor	r1, r1
+ 3a0:	86 95       	lsr	r24
+ 3a2:	86 95       	lsr	r24
+ 3a4:	86 95       	lsr	r24
+ 3a6:	80 5d       	subi	r24, 0xD0	; 208
+ 3a8:	a4 de       	rcall	.-696    	; 0xf2 <sendchar>
+		sendchar(sec%10+0x30);
+ 3aa:	80 91 70 00 	lds	r24, 0x0070	; 0x800070 <sec>
+ 3ae:	8c 9f       	mul	r24, r28
+ 3b0:	91 2d       	mov	r25, r1
+ 3b2:	11 24       	eor	r1, r1
+ 3b4:	96 95       	lsr	r25
+ 3b6:	96 95       	lsr	r25
+ 3b8:	96 95       	lsr	r25
+ 3ba:	99 0f       	add	r25, r25
+ 3bc:	29 2f       	mov	r18, r25
+ 3be:	22 0f       	add	r18, r18
+ 3c0:	22 0f       	add	r18, r18
+ 3c2:	92 0f       	add	r25, r18
+ 3c4:	89 1b       	sub	r24, r25
+ 3c6:	80 5d       	subi	r24, 0xD0	; 208
+ 3c8:	94 de       	rcall	.-728    	; 0xf2 <sendchar>
+		//sendchar('0x0d');
+		//sendchar('0x0a');
+		
+    }
+ 3ca:	07 cf       	rjmp	.-498    	; 0x1da <main+0x22>
+
+000003cc <RTC_ConvertFromDec>:
+
+#include "RTC.h"
+
+unsigned char RTC_ConvertFromDec(unsigned char c)
+{
+	unsigned char ch=((c>>4)*10+(0b00001111&c));
+ 3cc:	98 2f       	mov	r25, r24
+ 3ce:	92 95       	swap	r25
+ 3d0:	9f 70       	andi	r25, 0x0F	; 15
+ 3d2:	99 0f       	add	r25, r25
+ 3d4:	29 2f       	mov	r18, r25
+ 3d6:	22 0f       	add	r18, r18
+ 3d8:	22 0f       	add	r18, r18
+ 3da:	92 0f       	add	r25, r18
+ 3dc:	8f 70       	andi	r24, 0x0F	; 15
+	
+	return ch;
+	
+}
+ 3de:	89 0f       	add	r24, r25
+ 3e0:	08 95       	ret
+
+000003e2 <_exit>:
+ 3e2:	f8 94       	cli
+
+000003e4 <__stop_program>:
+ 3e4:	ff cf       	rjmp	.-2      	; 0x3e4 <__stop_program>

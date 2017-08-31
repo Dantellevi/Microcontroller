@@ -1,0 +1,409 @@
+
+SPI_26.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000196  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000001ea  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000001ea  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  0000021c  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000020  00000000  00000000  00000258  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   0000035f  00000000  00000000  00000278  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000000d3  00000000  00000000  000005d7  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000001cc  00000000  00000000  000006aa  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000024  00000000  00000000  00000878  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000186  00000000  00000000  0000089c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000010  00000000  00000000  00000a22  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	19 c0       	rjmp	.+50     	; 0x36 <__bad_interrupt>
+   4:	18 c0       	rjmp	.+48     	; 0x36 <__bad_interrupt>
+   6:	17 c0       	rjmp	.+46     	; 0x36 <__bad_interrupt>
+   8:	16 c0       	rjmp	.+44     	; 0x36 <__bad_interrupt>
+   a:	15 c0       	rjmp	.+42     	; 0x36 <__bad_interrupt>
+   c:	14 c0       	rjmp	.+40     	; 0x36 <__bad_interrupt>
+   e:	13 c0       	rjmp	.+38     	; 0x36 <__bad_interrupt>
+  10:	12 c0       	rjmp	.+36     	; 0x36 <__bad_interrupt>
+  12:	11 c0       	rjmp	.+34     	; 0x36 <__bad_interrupt>
+  14:	10 c0       	rjmp	.+32     	; 0x36 <__bad_interrupt>
+  16:	0f c0       	rjmp	.+30     	; 0x36 <__bad_interrupt>
+  18:	0e c0       	rjmp	.+28     	; 0x36 <__bad_interrupt>
+  1a:	0d c0       	rjmp	.+26     	; 0x36 <__bad_interrupt>
+  1c:	0c c0       	rjmp	.+24     	; 0x36 <__bad_interrupt>
+  1e:	0b c0       	rjmp	.+22     	; 0x36 <__bad_interrupt>
+  20:	0a c0       	rjmp	.+20     	; 0x36 <__bad_interrupt>
+  22:	09 c0       	rjmp	.+18     	; 0x36 <__bad_interrupt>
+  24:	08 c0       	rjmp	.+16     	; 0x36 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+  32:	02 d0       	rcall	.+4      	; 0x38 <main>
+  34:	ae c0       	rjmp	.+348    	; 0x192 <_exit>
+
+00000036 <__bad_interrupt>:
+  36:	e4 cf       	rjmp	.-56     	; 0x0 <__vectors>
+
+00000038 <main>:
+int main(void)
+{
+	
+	//int i=0;
+	
+	DDRB|=(1<<PORTB2)|(1<<PORTB3)|(1<<PORTB5);
+  38:	87 b3       	in	r24, 0x17	; 23
+  3a:	8c 62       	ori	r24, 0x2C	; 44
+  3c:	87 bb       	out	0x17, r24	; 23
+	PORTB&=~((1<<PORTB2)|(1<<PORTB3)|(1<<PORTB5));
+  3e:	88 b3       	in	r24, 0x18	; 24
+  40:	83 7d       	andi	r24, 0xD3	; 211
+  42:	88 bb       	out	0x18, r24	; 24
+	SPCR=((1<<SPE)|(1<<MSTR));// включаем шину , объявим ведущим
+  44:	80 e5       	ldi	r24, 0x50	; 80
+  46:	8d b9       	out	0x0d, r24	; 13
+	
+	SPDR=0b00000000;
+  48:	1f b8       	out	0x0f, r1	; 15
+	
+	while(!(SPSR&(1<<SPIF)));//подождем пока данные передадутся
+  4a:	77 9b       	sbis	0x0e, 7	; 14
+  4c:	fe cf       	rjmp	.-4      	; 0x4a <__SREG__+0xb>
+	//сгенерируем отрицательный фронт для записи в STORAGE REGISTER
+	PORTB|=(1<<PORTB2);
+  4e:	c2 9a       	sbi	0x18, 2	; 24
+	PORTB&=~((1<<PORTB2));
+  50:	c2 98       	cbi	0x18, 2	; 24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  52:	2f ef       	ldi	r18, 0xFF	; 255
+  54:	84 e3       	ldi	r24, 0x34	; 52
+  56:	9c e0       	ldi	r25, 0x0C	; 12
+  58:	21 50       	subi	r18, 0x01	; 1
+  5a:	80 40       	sbci	r24, 0x00	; 0
+  5c:	90 40       	sbci	r25, 0x00	; 0
+  5e:	e1 f7       	brne	.-8      	; 0x58 <__SREG__+0x19>
+  60:	00 c0       	rjmp	.+0      	; 0x62 <__SREG__+0x23>
+  62:	00 00       	nop
+	while (1)
+	{
+		
+		// отобразим 1
+		
+			SPDR=0b11111001;
+  64:	f9 ef       	ldi	r31, 0xF9	; 249
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++
+		
+		
+			//SPDR=0b11111001;
+			// отобразим 2
+			SPDR=0b10100100;
+  66:	e4 ea       	ldi	r30, 0xA4	; 164
+			PORTB|=(1<<PORTB2);
+			PORTB&=~((1<<PORTB2));
+			_delay_ms(1000); 
+			
+			// отобразим 3
+			SPDR=0b10110000;
+  68:	70 eb       	ldi	r23, 0xB0	; 176
+			PORTB|=(1<<PORTB2);
+			PORTB&=~((1<<PORTB2));
+			_delay_ms(1000);
+			
+			// отобразим 4
+			SPDR=0b10011001;
+  6a:	69 e9       	ldi	r22, 0x99	; 153
+			PORTB|=(1<<PORTB2);
+			PORTB&=~((1<<PORTB2));
+			_delay_ms(1000);
+			
+			// отобразим 5
+			SPDR=0b10010010;
+  6c:	52 e9       	ldi	r21, 0x92	; 146
+			PORTB|=(1<<PORTB2);
+			PORTB&=~((1<<PORTB2));
+			_delay_ms(1000);
+			
+			// отобразим 6 
+			SPDR=0b10000010;
+  6e:	42 e8       	ldi	r20, 0x82	; 130
+			PORTB|=(1<<PORTB2);
+			PORTB&=~((1<<PORTB2));
+			_delay_ms(1000);
+			
+			// отобразим 7
+			SPDR=0b11111000;
+  70:	38 ef       	ldi	r19, 0xF8	; 248
+			PORTB|=(1<<PORTB2);
+			PORTB&=~((1<<PORTB2));
+			_delay_ms(1000);
+			
+			// отобразим 8
+			SPDR=0b10000000;
+  72:	20 e8       	ldi	r18, 0x80	; 128
+			PORTB|=(1<<PORTB2);
+			PORTB&=~((1<<PORTB2));
+			_delay_ms(1000);
+			
+			// отобразим 9
+			SPDR=0b10010000;
+  74:	90 e9       	ldi	r25, 0x90	; 144
+			PORTB|=(1<<PORTB2);
+			PORTB&=~((1<<PORTB2));
+			_delay_ms(1000);
+			
+			// отобразим 0	
+			SPDR=0b11000000;	
+  76:	80 ec       	ldi	r24, 0xC0	; 192
+	while (1)
+	{
+		
+		// отобразим 1
+		
+			SPDR=0b11111001;
+  78:	ff b9       	out	0x0f, r31	; 15
+			while(!(SPSR&(1<<SPIF)));//подождем пока данные передадутся
+  7a:	77 9b       	sbis	0x0e, 7	; 14
+  7c:	fe cf       	rjmp	.-4      	; 0x7a <__SREG__+0x3b>
+			//сгенерируем отрицательный фронт для записи в STORAGE REGISTER
+			PORTB|=(1<<PORTB2);
+  7e:	c2 9a       	sbi	0x18, 2	; 24
+			PORTB&=~((1<<PORTB2));
+  80:	c2 98       	cbi	0x18, 2	; 24
+  82:	af ef       	ldi	r26, 0xFF	; 255
+  84:	b9 e6       	ldi	r27, 0x69	; 105
+  86:	c8 e1       	ldi	r28, 0x18	; 24
+  88:	a1 50       	subi	r26, 0x01	; 1
+  8a:	b0 40       	sbci	r27, 0x00	; 0
+  8c:	c0 40       	sbci	r28, 0x00	; 0
+  8e:	e1 f7       	brne	.-8      	; 0x88 <__SREG__+0x49>
+  90:	00 c0       	rjmp	.+0      	; 0x92 <__SREG__+0x53>
+  92:	00 00       	nop
+		//+++++++++++++++++++++++++++++++++++++++++++++++++++++
+		
+		
+			//SPDR=0b11111001;
+			// отобразим 2
+			SPDR=0b10100100;
+  94:	ef b9       	out	0x0f, r30	; 15
+			while(!(SPSR&(1<<SPIF)));//подождем пока данные передадутся
+  96:	77 9b       	sbis	0x0e, 7	; 14
+  98:	fe cf       	rjmp	.-4      	; 0x96 <__SREG__+0x57>
+			//сгенерируем отрицательный фронт для записи в STORAGE REGISTER
+			PORTB|=(1<<PORTB2);
+  9a:	c2 9a       	sbi	0x18, 2	; 24
+			PORTB&=~((1<<PORTB2));
+  9c:	c2 98       	cbi	0x18, 2	; 24
+  9e:	af ef       	ldi	r26, 0xFF	; 255
+  a0:	b9 e6       	ldi	r27, 0x69	; 105
+  a2:	c8 e1       	ldi	r28, 0x18	; 24
+  a4:	a1 50       	subi	r26, 0x01	; 1
+  a6:	b0 40       	sbci	r27, 0x00	; 0
+  a8:	c0 40       	sbci	r28, 0x00	; 0
+  aa:	e1 f7       	brne	.-8      	; 0xa4 <__SREG__+0x65>
+  ac:	00 c0       	rjmp	.+0      	; 0xae <__SREG__+0x6f>
+  ae:	00 00       	nop
+			_delay_ms(1000); 
+			
+			// отобразим 3
+			SPDR=0b10110000;
+  b0:	7f b9       	out	0x0f, r23	; 15
+			while(!(SPSR&(1<<SPIF)));//подождем пока данные передадутся
+  b2:	77 9b       	sbis	0x0e, 7	; 14
+  b4:	fe cf       	rjmp	.-4      	; 0xb2 <__SREG__+0x73>
+			//сгенерируем отрицательный фронт для записи в STORAGE REGISTER
+			PORTB|=(1<<PORTB2);
+  b6:	c2 9a       	sbi	0x18, 2	; 24
+			PORTB&=~((1<<PORTB2));
+  b8:	c2 98       	cbi	0x18, 2	; 24
+  ba:	af ef       	ldi	r26, 0xFF	; 255
+  bc:	b9 e6       	ldi	r27, 0x69	; 105
+  be:	c8 e1       	ldi	r28, 0x18	; 24
+  c0:	a1 50       	subi	r26, 0x01	; 1
+  c2:	b0 40       	sbci	r27, 0x00	; 0
+  c4:	c0 40       	sbci	r28, 0x00	; 0
+  c6:	e1 f7       	brne	.-8      	; 0xc0 <__SREG__+0x81>
+  c8:	00 c0       	rjmp	.+0      	; 0xca <__SREG__+0x8b>
+  ca:	00 00       	nop
+			_delay_ms(1000);
+			
+			// отобразим 4
+			SPDR=0b10011001;
+  cc:	6f b9       	out	0x0f, r22	; 15
+			while(!(SPSR&(1<<SPIF)));//подождем пока данные передадутся
+  ce:	77 9b       	sbis	0x0e, 7	; 14
+  d0:	fe cf       	rjmp	.-4      	; 0xce <__SREG__+0x8f>
+			//сгенерируем отрицательный фронт для записи в STORAGE REGISTER
+			PORTB|=(1<<PORTB2);
+  d2:	c2 9a       	sbi	0x18, 2	; 24
+			PORTB&=~((1<<PORTB2));
+  d4:	c2 98       	cbi	0x18, 2	; 24
+  d6:	af ef       	ldi	r26, 0xFF	; 255
+  d8:	b9 e6       	ldi	r27, 0x69	; 105
+  da:	c8 e1       	ldi	r28, 0x18	; 24
+  dc:	a1 50       	subi	r26, 0x01	; 1
+  de:	b0 40       	sbci	r27, 0x00	; 0
+  e0:	c0 40       	sbci	r28, 0x00	; 0
+  e2:	e1 f7       	brne	.-8      	; 0xdc <__SREG__+0x9d>
+  e4:	00 c0       	rjmp	.+0      	; 0xe6 <__SREG__+0xa7>
+  e6:	00 00       	nop
+			_delay_ms(1000);
+			
+			// отобразим 5
+			SPDR=0b10010010;
+  e8:	5f b9       	out	0x0f, r21	; 15
+			while(!(SPSR&(1<<SPIF)));//подождем пока данные передадутся
+  ea:	77 9b       	sbis	0x0e, 7	; 14
+  ec:	fe cf       	rjmp	.-4      	; 0xea <__SREG__+0xab>
+			//сгенерируем отрицательный фронт для записи в STORAGE REGISTER
+			PORTB|=(1<<PORTB2);
+  ee:	c2 9a       	sbi	0x18, 2	; 24
+			PORTB&=~((1<<PORTB2));
+  f0:	c2 98       	cbi	0x18, 2	; 24
+  f2:	af ef       	ldi	r26, 0xFF	; 255
+  f4:	b9 e6       	ldi	r27, 0x69	; 105
+  f6:	c8 e1       	ldi	r28, 0x18	; 24
+  f8:	a1 50       	subi	r26, 0x01	; 1
+  fa:	b0 40       	sbci	r27, 0x00	; 0
+  fc:	c0 40       	sbci	r28, 0x00	; 0
+  fe:	e1 f7       	brne	.-8      	; 0xf8 <__SREG__+0xb9>
+ 100:	00 c0       	rjmp	.+0      	; 0x102 <__SREG__+0xc3>
+ 102:	00 00       	nop
+			_delay_ms(1000);
+			
+			// отобразим 6 
+			SPDR=0b10000010;
+ 104:	4f b9       	out	0x0f, r20	; 15
+			while(!(SPSR&(1<<SPIF)));//подождем пока данные передадутся
+ 106:	77 9b       	sbis	0x0e, 7	; 14
+ 108:	fe cf       	rjmp	.-4      	; 0x106 <__SREG__+0xc7>
+			//сгенерируем отрицательный фронт для записи в STORAGE REGISTER
+			PORTB|=(1<<PORTB2);
+ 10a:	c2 9a       	sbi	0x18, 2	; 24
+			PORTB&=~((1<<PORTB2));
+ 10c:	c2 98       	cbi	0x18, 2	; 24
+ 10e:	af ef       	ldi	r26, 0xFF	; 255
+ 110:	b9 e6       	ldi	r27, 0x69	; 105
+ 112:	c8 e1       	ldi	r28, 0x18	; 24
+ 114:	a1 50       	subi	r26, 0x01	; 1
+ 116:	b0 40       	sbci	r27, 0x00	; 0
+ 118:	c0 40       	sbci	r28, 0x00	; 0
+ 11a:	e1 f7       	brne	.-8      	; 0x114 <__SREG__+0xd5>
+ 11c:	00 c0       	rjmp	.+0      	; 0x11e <__SREG__+0xdf>
+ 11e:	00 00       	nop
+			_delay_ms(1000);
+			
+			// отобразим 7
+			SPDR=0b11111000;
+ 120:	3f b9       	out	0x0f, r19	; 15
+			while(!(SPSR&(1<<SPIF)));//подождем пока данные передадутся
+ 122:	77 9b       	sbis	0x0e, 7	; 14
+ 124:	fe cf       	rjmp	.-4      	; 0x122 <__SREG__+0xe3>
+			//сгенерируем отрицательный фронт для записи в STORAGE REGISTER
+			PORTB|=(1<<PORTB2);
+ 126:	c2 9a       	sbi	0x18, 2	; 24
+			PORTB&=~((1<<PORTB2));
+ 128:	c2 98       	cbi	0x18, 2	; 24
+ 12a:	af ef       	ldi	r26, 0xFF	; 255
+ 12c:	b9 e6       	ldi	r27, 0x69	; 105
+ 12e:	c8 e1       	ldi	r28, 0x18	; 24
+ 130:	a1 50       	subi	r26, 0x01	; 1
+ 132:	b0 40       	sbci	r27, 0x00	; 0
+ 134:	c0 40       	sbci	r28, 0x00	; 0
+ 136:	e1 f7       	brne	.-8      	; 0x130 <__SREG__+0xf1>
+ 138:	00 c0       	rjmp	.+0      	; 0x13a <__SREG__+0xfb>
+ 13a:	00 00       	nop
+			_delay_ms(1000);
+			
+			// отобразим 8
+			SPDR=0b10000000;
+ 13c:	2f b9       	out	0x0f, r18	; 15
+			while(!(SPSR&(1<<SPIF)));//подождем пока данные передадутся
+ 13e:	77 9b       	sbis	0x0e, 7	; 14
+ 140:	fe cf       	rjmp	.-4      	; 0x13e <__SREG__+0xff>
+			//сгенерируем отрицательный фронт для записи в STORAGE REGISTER
+			PORTB|=(1<<PORTB2);
+ 142:	c2 9a       	sbi	0x18, 2	; 24
+			PORTB&=~((1<<PORTB2));
+ 144:	c2 98       	cbi	0x18, 2	; 24
+ 146:	af ef       	ldi	r26, 0xFF	; 255
+ 148:	b9 e6       	ldi	r27, 0x69	; 105
+ 14a:	c8 e1       	ldi	r28, 0x18	; 24
+ 14c:	a1 50       	subi	r26, 0x01	; 1
+ 14e:	b0 40       	sbci	r27, 0x00	; 0
+ 150:	c0 40       	sbci	r28, 0x00	; 0
+ 152:	e1 f7       	brne	.-8      	; 0x14c <__SREG__+0x10d>
+ 154:	00 c0       	rjmp	.+0      	; 0x156 <__SREG__+0x117>
+ 156:	00 00       	nop
+			_delay_ms(1000);
+			
+			// отобразим 9
+			SPDR=0b10010000;
+ 158:	9f b9       	out	0x0f, r25	; 15
+			while(!(SPSR&(1<<SPIF)));//подождем пока данные передадутся
+ 15a:	77 9b       	sbis	0x0e, 7	; 14
+ 15c:	fe cf       	rjmp	.-4      	; 0x15a <__SREG__+0x11b>
+			//сгенерируем отрицательный фронт для записи в STORAGE REGISTER
+			PORTB|=(1<<PORTB2);
+ 15e:	c2 9a       	sbi	0x18, 2	; 24
+			PORTB&=~((1<<PORTB2));
+ 160:	c2 98       	cbi	0x18, 2	; 24
+ 162:	af ef       	ldi	r26, 0xFF	; 255
+ 164:	b9 e6       	ldi	r27, 0x69	; 105
+ 166:	c8 e1       	ldi	r28, 0x18	; 24
+ 168:	a1 50       	subi	r26, 0x01	; 1
+ 16a:	b0 40       	sbci	r27, 0x00	; 0
+ 16c:	c0 40       	sbci	r28, 0x00	; 0
+ 16e:	e1 f7       	brne	.-8      	; 0x168 <__SREG__+0x129>
+ 170:	00 c0       	rjmp	.+0      	; 0x172 <__SREG__+0x133>
+ 172:	00 00       	nop
+			_delay_ms(1000);
+			
+			// отобразим 0	
+			SPDR=0b11000000;	
+ 174:	8f b9       	out	0x0f, r24	; 15
+			while(!(SPSR&(1<<SPIF)));//подождем пока данные передадутся
+ 176:	77 9b       	sbis	0x0e, 7	; 14
+ 178:	fe cf       	rjmp	.-4      	; 0x176 <__SREG__+0x137>
+			//сгенерируем отрицательный фронт для записи в STORAGE REGISTER
+			PORTB|=(1<<PORTB2);
+ 17a:	c2 9a       	sbi	0x18, 2	; 24
+			PORTB&=~((1<<PORTB2));
+ 17c:	c2 98       	cbi	0x18, 2	; 24
+ 17e:	af ef       	ldi	r26, 0xFF	; 255
+ 180:	b9 e6       	ldi	r27, 0x69	; 105
+ 182:	c8 e1       	ldi	r28, 0x18	; 24
+ 184:	a1 50       	subi	r26, 0x01	; 1
+ 186:	b0 40       	sbci	r27, 0x00	; 0
+ 188:	c0 40       	sbci	r28, 0x00	; 0
+ 18a:	e1 f7       	brne	.-8      	; 0x184 <__SREG__+0x145>
+ 18c:	00 c0       	rjmp	.+0      	; 0x18e <__SREG__+0x14f>
+ 18e:	00 00       	nop
+ 190:	73 cf       	rjmp	.-282    	; 0x78 <__SREG__+0x39>
+
+00000192 <_exit>:
+ 192:	f8 94       	cli
+
+00000194 <__stop_program>:
+ 194:	ff cf       	rjmp	.-2      	; 0x194 <__stop_program>

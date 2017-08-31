@@ -1,0 +1,397 @@
+
+Lesson_18.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000016a  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000001be  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000001be  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001f0  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000090  00000000  00000000  0000022c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000005e3  00000000  00000000  000002bc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000001f2  00000000  00000000  0000089f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000468  00000000  00000000  00000a91  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  000000e8  00000000  00000000  00000efc  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000001e0  00000000  00000000  00000fe4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000008e  00000000  00000000  000011c4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000070  00000000  00000000  00001252  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	21 c0       	rjmp	.+66     	; 0x46 <__bad_interrupt>
+   4:	20 c0       	rjmp	.+64     	; 0x46 <__bad_interrupt>
+   6:	1f c0       	rjmp	.+62     	; 0x46 <__bad_interrupt>
+   8:	1e c0       	rjmp	.+60     	; 0x46 <__bad_interrupt>
+   a:	1d c0       	rjmp	.+58     	; 0x46 <__bad_interrupt>
+   c:	1c c0       	rjmp	.+56     	; 0x46 <__bad_interrupt>
+   e:	1b c0       	rjmp	.+54     	; 0x46 <__bad_interrupt>
+  10:	1a c0       	rjmp	.+52     	; 0x46 <__bad_interrupt>
+  12:	19 c0       	rjmp	.+50     	; 0x46 <__bad_interrupt>
+  14:	18 c0       	rjmp	.+48     	; 0x46 <__bad_interrupt>
+  16:	17 c0       	rjmp	.+46     	; 0x46 <__bad_interrupt>
+  18:	16 c0       	rjmp	.+44     	; 0x46 <__bad_interrupt>
+  1a:	15 c0       	rjmp	.+42     	; 0x46 <__bad_interrupt>
+  1c:	14 c0       	rjmp	.+40     	; 0x46 <__bad_interrupt>
+  1e:	13 c0       	rjmp	.+38     	; 0x46 <__bad_interrupt>
+  20:	12 c0       	rjmp	.+36     	; 0x46 <__bad_interrupt>
+  22:	11 c0       	rjmp	.+34     	; 0x46 <__bad_interrupt>
+  24:	10 c0       	rjmp	.+32     	; 0x46 <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_clear_bss>:
+  32:	20 e0       	ldi	r18, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	01 c0       	rjmp	.+2      	; 0x3c <.do_clear_bss_start>
+
+0000003a <.do_clear_bss_loop>:
+  3a:	1d 92       	st	X+, r1
+
+0000003c <.do_clear_bss_start>:
+  3c:	a0 36       	cpi	r26, 0x60	; 96
+  3e:	b2 07       	cpc	r27, r18
+  40:	e1 f7       	brne	.-8      	; 0x3a <.do_clear_bss_loop>
+  42:	02 d0       	rcall	.+4      	; 0x48 <main>
+  44:	90 c0       	rjmp	.+288    	; 0x166 <_exit>
+
+00000046 <__bad_interrupt>:
+  46:	dc cf       	rjmp	.-72     	; 0x0 <__vectors>
+
+00000048 <main>:
+#include "Main.h"
+
+
+int main(void)
+{
+	SM_ini();
+  48:	1f d0       	rcall	.+62     	; 0x88 <SM_ini>
+
+#include "Main.h"
+
+
+int main(void)
+{
+  4a:	00 e0       	ldi	r16, 0x00	; 0
+  4c:	12 e0       	ldi	r17, 0x02	; 2
+  4e:	c0 2f       	mov	r28, r16
+  50:	d1 2f       	mov	r29, r17
+    /* Replace with your application code */
+    while (1) 
+    {
+		for (int i=0;i<=511;i++)
+		{
+			SMforvard();
+  52:	77 d0       	rcall	.+238    	; 0x142 <SMforvard>
+  54:	21 97       	sbiw	r28, 0x01	; 1
+{
+	SM_ini();
+    /* Replace with your application code */
+    while (1) 
+    {
+		for (int i=0;i<=511;i++)
+  56:	e9 f7       	brne	.-6      	; 0x52 <main+0xa>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  58:	9f ef       	ldi	r25, 0xFF	; 255
+  5a:	22 e5       	ldi	r18, 0x52	; 82
+  5c:	87 e0       	ldi	r24, 0x07	; 7
+  5e:	91 50       	subi	r25, 0x01	; 1
+  60:	20 40       	sbci	r18, 0x00	; 0
+  62:	80 40       	sbci	r24, 0x00	; 0
+  64:	e1 f7       	brne	.-8      	; 0x5e <main+0x16>
+  66:	00 c0       	rjmp	.+0      	; 0x68 <main+0x20>
+  68:	00 00       	nop
+  6a:	c0 2f       	mov	r28, r16
+  6c:	d1 2f       	mov	r29, r17
+			SMforvard();
+		}
+		_delay_ms(300);
+		for (int i=0;i<=511;i++)
+		{
+			SM_back();
+  6e:	72 d0       	rcall	.+228    	; 0x154 <SM_back>
+  70:	21 97       	sbiw	r28, 0x01	; 1
+		for (int i=0;i<=511;i++)
+		{
+			SMforvard();
+		}
+		_delay_ms(300);
+		for (int i=0;i<=511;i++)
+  72:	e9 f7       	brne	.-6      	; 0x6e <main+0x26>
+  74:	8f ef       	ldi	r24, 0xFF	; 255
+  76:	96 e1       	ldi	r25, 0x16	; 22
+  78:	21 e1       	ldi	r18, 0x11	; 17
+  7a:	81 50       	subi	r24, 0x01	; 1
+  7c:	90 40       	sbci	r25, 0x00	; 0
+  7e:	20 40       	sbci	r18, 0x00	; 0
+  80:	e1 f7       	brne	.-8      	; 0x7a <main+0x32>
+  82:	00 c0       	rjmp	.+0      	; 0x84 <main+0x3c>
+  84:	00 00       	nop
+  86:	e3 cf       	rjmp	.-58     	; 0x4e <main+0x6>
+
+00000088 <SM_ini>:
+
+int i=0;
+
+void SM_ini(void)
+{
+	SM_ddr|=(1<<IN4)|(1<<IN3)|(1<<IN2)|(1<<IN1);
+  88:	84 b3       	in	r24, 0x14	; 20
+  8a:	8f 60       	ori	r24, 0x0F	; 15
+  8c:	84 bb       	out	0x14, r24	; 20
+	SM_port&=~(1<<IN4)|(1<<IN3)|(1<<IN2)|(1<<IN1);
+  8e:	ab 98       	cbi	0x15, 3	; 21
+  90:	08 95       	ret
+
+00000092 <SM_set1>:
+}
+
+void SM_set1(void)
+{
+	SM_port|=(1<<IN1);
+  92:	a8 9a       	sbi	0x15, 0	; 21
+	SM_port&=~(1<<IN2);
+  94:	a9 98       	cbi	0x15, 1	; 21
+	SM_port&=~(1<<IN3);
+  96:	aa 98       	cbi	0x15, 2	; 21
+	SM_port&=~(1<<IN4);
+  98:	ab 98       	cbi	0x15, 3	; 21
+  9a:	8f e0       	ldi	r24, 0x0F	; 15
+  9c:	97 e2       	ldi	r25, 0x27	; 39
+  9e:	01 97       	sbiw	r24, 0x01	; 1
+  a0:	f1 f7       	brne	.-4      	; 0x9e <SM_set1+0xc>
+  a2:	00 c0       	rjmp	.+0      	; 0xa4 <SM_set1+0x12>
+  a4:	00 00       	nop
+  a6:	08 95       	ret
+
+000000a8 <SM_set2>:
+	SM_delay;
+	
+}
+void SM_set2(void)
+{
+	SM_port|=(1<<IN1);
+  a8:	a8 9a       	sbi	0x15, 0	; 21
+	SM_port|=(1<<IN4);
+  aa:	ab 9a       	sbi	0x15, 3	; 21
+	SM_port&=~(1<<IN2);
+  ac:	a9 98       	cbi	0x15, 1	; 21
+	SM_port&=~(1<<IN3);
+  ae:	aa 98       	cbi	0x15, 2	; 21
+  b0:	8f e0       	ldi	r24, 0x0F	; 15
+  b2:	97 e2       	ldi	r25, 0x27	; 39
+  b4:	01 97       	sbiw	r24, 0x01	; 1
+  b6:	f1 f7       	brne	.-4      	; 0xb4 <SM_set2+0xc>
+  b8:	00 c0       	rjmp	.+0      	; 0xba <SM_set2+0x12>
+  ba:	00 00       	nop
+  bc:	08 95       	ret
+
+000000be <SM_set3>:
+	SM_delay;
+	
+}
+void SM_set3(void)
+{
+	SM_port|=(1<<IN4);
+  be:	ab 9a       	sbi	0x15, 3	; 21
+	SM_port&=~(1<<IN1);
+  c0:	a8 98       	cbi	0x15, 0	; 21
+	SM_port&=~(1<<IN2);
+  c2:	a9 98       	cbi	0x15, 1	; 21
+	SM_port&=~(1<<IN3);
+  c4:	aa 98       	cbi	0x15, 2	; 21
+  c6:	8f e0       	ldi	r24, 0x0F	; 15
+  c8:	97 e2       	ldi	r25, 0x27	; 39
+  ca:	01 97       	sbiw	r24, 0x01	; 1
+  cc:	f1 f7       	brne	.-4      	; 0xca <SM_set3+0xc>
+  ce:	00 c0       	rjmp	.+0      	; 0xd0 <SM_set3+0x12>
+  d0:	00 00       	nop
+  d2:	08 95       	ret
+
+000000d4 <SM_set4>:
+	SM_delay;
+	
+}
+void SM_set4(void)
+{
+	SM_port|=(1<<IN4);
+  d4:	ab 9a       	sbi	0x15, 3	; 21
+	SM_port|=(1<<IN3);
+  d6:	aa 9a       	sbi	0x15, 2	; 21
+	SM_port&=~(1<<IN1);
+  d8:	a8 98       	cbi	0x15, 0	; 21
+	SM_port&=~(1<<IN2);
+  da:	a9 98       	cbi	0x15, 1	; 21
+  dc:	8f e0       	ldi	r24, 0x0F	; 15
+  de:	97 e2       	ldi	r25, 0x27	; 39
+  e0:	01 97       	sbiw	r24, 0x01	; 1
+  e2:	f1 f7       	brne	.-4      	; 0xe0 <SM_set4+0xc>
+  e4:	00 c0       	rjmp	.+0      	; 0xe6 <SM_set4+0x12>
+  e6:	00 00       	nop
+  e8:	08 95       	ret
+
+000000ea <SM_set5>:
+	SM_delay;
+	
+}
+void SM_set5(void)
+{
+	SM_port|=(1<<IN3);
+  ea:	aa 9a       	sbi	0x15, 2	; 21
+	SM_port&=~(1<<IN1);
+  ec:	a8 98       	cbi	0x15, 0	; 21
+	SM_port&=~(1<<IN2);
+  ee:	a9 98       	cbi	0x15, 1	; 21
+	SM_port&=~(1<<IN4);
+  f0:	ab 98       	cbi	0x15, 3	; 21
+  f2:	8f e0       	ldi	r24, 0x0F	; 15
+  f4:	97 e2       	ldi	r25, 0x27	; 39
+  f6:	01 97       	sbiw	r24, 0x01	; 1
+  f8:	f1 f7       	brne	.-4      	; 0xf6 <SM_set5+0xc>
+  fa:	00 c0       	rjmp	.+0      	; 0xfc <SM_set5+0x12>
+  fc:	00 00       	nop
+  fe:	08 95       	ret
+
+00000100 <SM_set6>:
+	SM_delay;
+	
+}
+void SM_set6(void)
+{
+	SM_port|=(1<<IN3);
+ 100:	aa 9a       	sbi	0x15, 2	; 21
+	SM_port|=(1<<IN2);
+ 102:	a9 9a       	sbi	0x15, 1	; 21
+	SM_port&=~(1<<IN1);
+ 104:	a8 98       	cbi	0x15, 0	; 21
+	SM_port&=~(1<<IN4);
+ 106:	ab 98       	cbi	0x15, 3	; 21
+ 108:	8f e0       	ldi	r24, 0x0F	; 15
+ 10a:	97 e2       	ldi	r25, 0x27	; 39
+ 10c:	01 97       	sbiw	r24, 0x01	; 1
+ 10e:	f1 f7       	brne	.-4      	; 0x10c <SM_set6+0xc>
+ 110:	00 c0       	rjmp	.+0      	; 0x112 <SM_set6+0x12>
+ 112:	00 00       	nop
+ 114:	08 95       	ret
+
+00000116 <SM_set7>:
+	SM_delay;
+	
+}
+void SM_set7(void)
+{
+	SM_port|=(1<<IN2);
+ 116:	a9 9a       	sbi	0x15, 1	; 21
+	SM_port&=~(1<<IN1);
+ 118:	a8 98       	cbi	0x15, 0	; 21
+	SM_port&=~(1<<IN3);
+ 11a:	aa 98       	cbi	0x15, 2	; 21
+	SM_port&=~(1<<IN4);
+ 11c:	ab 98       	cbi	0x15, 3	; 21
+ 11e:	8f e0       	ldi	r24, 0x0F	; 15
+ 120:	97 e2       	ldi	r25, 0x27	; 39
+ 122:	01 97       	sbiw	r24, 0x01	; 1
+ 124:	f1 f7       	brne	.-4      	; 0x122 <SM_set7+0xc>
+ 126:	00 c0       	rjmp	.+0      	; 0x128 <SM_set7+0x12>
+ 128:	00 00       	nop
+ 12a:	08 95       	ret
+
+0000012c <SM_set8>:
+	SM_delay;
+	
+}
+void SM_set8(void)
+{
+	SM_port|=(1<<IN1);
+ 12c:	a8 9a       	sbi	0x15, 0	; 21
+	SM_port|=(1<<IN2);
+ 12e:	a9 9a       	sbi	0x15, 1	; 21
+	SM_port&=~(1<<IN3);
+ 130:	aa 98       	cbi	0x15, 2	; 21
+	SM_port&=~(1<<IN4);
+ 132:	ab 98       	cbi	0x15, 3	; 21
+ 134:	8f e0       	ldi	r24, 0x0F	; 15
+ 136:	97 e2       	ldi	r25, 0x27	; 39
+ 138:	01 97       	sbiw	r24, 0x01	; 1
+ 13a:	f1 f7       	brne	.-4      	; 0x138 <SM_set8+0xc>
+ 13c:	00 c0       	rjmp	.+0      	; 0x13e <SM_set8+0x12>
+ 13e:	00 00       	nop
+ 140:	08 95       	ret
+
+00000142 <SMforvard>:
+	
+}
+
+void SMforvard(void)
+{
+	SM_set1();
+ 142:	a7 df       	rcall	.-178    	; 0x92 <SM_set1>
+	SM_set2();
+ 144:	b1 df       	rcall	.-158    	; 0xa8 <SM_set2>
+	SM_set3();
+ 146:	bb df       	rcall	.-138    	; 0xbe <SM_set3>
+	SM_set4();
+ 148:	c5 df       	rcall	.-118    	; 0xd4 <SM_set4>
+	SM_set5();
+ 14a:	cf df       	rcall	.-98     	; 0xea <SM_set5>
+	SM_set6();
+ 14c:	d9 df       	rcall	.-78     	; 0x100 <SM_set6>
+	SM_set7();
+ 14e:	e3 df       	rcall	.-58     	; 0x116 <SM_set7>
+	SM_set8();
+ 150:	ed df       	rcall	.-38     	; 0x12c <SM_set8>
+ 152:	08 95       	ret
+
+00000154 <SM_back>:
+}
+
+void SM_back(void)
+{
+	SM_set8();
+ 154:	eb df       	rcall	.-42     	; 0x12c <SM_set8>
+	SM_set7();
+ 156:	df df       	rcall	.-66     	; 0x116 <SM_set7>
+	SM_set6();
+ 158:	d3 df       	rcall	.-90     	; 0x100 <SM_set6>
+	SM_set5();
+ 15a:	c7 df       	rcall	.-114    	; 0xea <SM_set5>
+	SM_set4();
+ 15c:	bb df       	rcall	.-138    	; 0xd4 <SM_set4>
+	SM_set3();
+ 15e:	af df       	rcall	.-162    	; 0xbe <SM_set3>
+	SM_set2();
+ 160:	a3 df       	rcall	.-186    	; 0xa8 <SM_set2>
+	SM_set1();
+ 162:	97 df       	rcall	.-210    	; 0x92 <SM_set1>
+ 164:	08 95       	ret
+
+00000166 <_exit>:
+ 166:	f8 94       	cli
+
+00000168 <__stop_program>:
+ 168:	ff cf       	rjmp	.-2      	; 0x168 <__stop_program>
